@@ -6,6 +6,9 @@ import random
 from tkinter import messagebox
 import time
 
+inicio = 0
+final = 0
+detener = False
 
 #Vaoy a probar algo nuevo
 #Crear una ventana en tkinter
@@ -117,14 +120,16 @@ def nuevo_click(i, j):
         
         print(anulados)
 
-        
+        global detener
+        global inicio
         inicio = time.time()
         print(inicio)
-        respuesta = input('Ingresa la respuesta \n')
-        final = time.time()
-        tiempo = round(final-inicio, 0)
-        print(respuesta)
-        print("Te has tardado " + str(tiempo))
+        
+        
+        
+        #respuesta = input('Ingresa la respuesta \n')
+       
+        
     
     
     
@@ -139,11 +144,19 @@ def nuevo_click(i, j):
     
     
         
+def detenerTiempo():
+    global tiempo
+    global inicio
+    global final
+    final = time.time()
+    tiempo = round(final-inicio, 0)
     
+    print("Te has tardado " + str(tiempo))
 
 #Crear un boton que diga, seleccion
 
-    
+
+
     
     
     
@@ -185,6 +198,8 @@ generarMatriz()
 boton = ttk.Button(text="Creacion", command=generarMatriz)
 boton.place(x=5, y=5)
 
+boton = ttk.Button(text="Detener", command=detenerTiempo)
+boton.place(x=100, y=5)
 
 
 root.mainloop()
