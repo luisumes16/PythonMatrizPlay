@@ -4,6 +4,8 @@ from tkinter import ttk
 from functools import partial
 import random
 from tkinter import messagebox
+import time
+
 
 #Vaoy a probar algo nuevo
 #Crear una ventana en tkinter
@@ -113,7 +115,14 @@ def nuevo_click(i, j):
         anulados.append([i,j])
         
         print(anulados)
-       
+
+        inicio = time.time()
+        print(inicio)
+        respuesta = input('Ingresa la respuesta \n')
+        final = time.time()
+        tiempo = round(final-inicio, 0)
+        print(respuesta)
+        print("Te has tardado " + str(tiempo))
     
     
     
