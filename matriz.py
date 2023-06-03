@@ -17,6 +17,7 @@ root.config(bg="#FFFFFF")
 filas = 8
 columnas = 8
 
+
 #Crear una matriz con numeros aleatorios de 3 columnas y 3 filas
 matriz = [[random.randint(0,11) for x in range(columnas)] for y in range(filas)]
 #label = Label(root, text = "Hola mundo " )
@@ -116,6 +117,7 @@ def nuevo_click(i, j):
         
         print(anulados)
 
+        
         inicio = time.time()
         print(inicio)
         respuesta = input('Ingresa la respuesta \n')
@@ -123,7 +125,6 @@ def nuevo_click(i, j):
         tiempo = round(final-inicio, 0)
         print(respuesta)
         print("Te has tardado " + str(tiempo))
-    
     
     
     
