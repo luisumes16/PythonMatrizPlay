@@ -29,8 +29,9 @@ matriz = [[random.randint(0,11) for x in range(columnas)] for y in range(filas)]
 
 #crear una matriz vacia
 anulados=[]
-
+sumatoria = 0
 def nuevo_click(i, j):
+    global sumatoria
     sumatoria = 0
     print(str(i) + " " + str(j))
     if [i, j] in anulados:
@@ -148,10 +149,14 @@ def detenerTiempo():
     global tiempo
     global inicio
     global final
+    global sumatoria
     final = time.time()
     tiempo = round(final-inicio, 0)
     
     print("Te has tardado " + str(tiempo))
+    resultadoUsuario = entry.get()
+    print(resultadoUsuario)
+    print(sumatoria)
 
 #Crear un boton que diga, seleccion
 
@@ -193,7 +198,10 @@ def generarMatriz():
 generarMatriz()
     
     
-    
+# Crear caja de texto.
+entry = ttk.Entry()
+# Posicionarla en la ventana.
+entry.place(x=50, y=30) 
 
 boton = ttk.Button(text="Creacion", command=generarMatriz)
 boton.place(x=5, y=5)
