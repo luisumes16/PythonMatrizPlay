@@ -5,7 +5,7 @@ from functools import partial
 import random
 from tkinter import messagebox
 
-
+#Vaoy a probar algo nuevo
 #Crear una ventana en tkinter
 root = Tk()
 root.title('TKINTER GAME')
