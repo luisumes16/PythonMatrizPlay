@@ -14,60 +14,72 @@ detener = False
 #Crear una ventana en tkinter
 root = Tk()
 root.title('TKINTER GAME')
-root.geometry("600x500")
+root.geometry("800x700")
 root.config(bg="#FFFFFF")
 
-filas = 8
-columnas = 8
+
+root2 = Tk()
+root2.title('TKINTER GAME')
+root2.geometry("800x700")
+root2.config(bg="#FFFFFF")
+
+filas = 8 #El numero de filas que deseo en la matriz
+columnas = 8 # el numero de columnas que deseo en la matriz
 
 
 #Crear una matriz con numeros aleatorios de 3 columnas y 3 filas
-matriz = [[random.randint(0,11) for x in range(columnas)] for y in range(filas)]
+matriz = [[random.randint(0,11) for x in range(columnas)] for y in range(filas)] #Se crea una matriz con numeros aleatoreos con las columnas y filas que deseo.
 #label = Label(root, text = "Hola mundo " )
 #label.grid(row = 1, column = 0)
 #label.config(bg = "#070D0F")
 
 #crear una matriz vacia
-anulados=[]
-sumatoria = 0
+anulados=[]#Aqui ire guardando las posiciones de los botones que ya fueron utilizados
+sumatoria = 0 #Guardaré la sumatoria de los numeros vecinos
+
+#Se hara una funcion el cual se ejecutara cuando el usuario le de click a un boton de la matriz.
 def nuevo_click(i, j):
-    global sumatoria
-    sumatoria = 0
+    global sumatoria #Utilizo la variable sumatoria en modalidad global.
+    sumatoria = 0 #Reinicio la variable en 0
     print(str(i) + " " + str(j))
-    if [i, j] in anulados:
+    #Ahora comprobare si la posición que se envió ya existe en la matriz anulados.
+    if [i, j] in anulados: #S
         print('Existe en la matriz')
-        messagebox.showinfo(message="No puedes seleccionar este numero", title="Incorrecto")
+        messagebox.showinfo(message="No puedes seleccionar este numero", title="Incorrecto")#Envio un mensaje de error para notificar al usuario que ya existe. 
     else:
+        #De lo contrario comenzará a mostrar todos los numeros vecinos
+
+        btnLista[i][j].config(bg = "#FFFFFF", relief = "solid", fg = "red")#El numero central se pintara de color rojo.
         
-    
-        btnLista[i][j].config(bg = "#FFFFFF", relief = "solid", fg = "red")
-        
-        if i +1 >= filas:
+        if i +1 >= filas: #Comprueba si se puede para la parte de abajo. 
             print("No se puede abajo")
         else:
             print(columnas)
             print(j)
+            #Si se puede abajo, pintara de azul
             btnLista[i+1][j].config(bg = "#FFFFFF", relief = "solid", fg = "blue")
             print("El numero es AC" + str(matriz[i+1][j]))
-            sumatoria = sumatoria + matriz[i+1][j]
+            sumatoria = sumatoria + matriz[i+1][j]#Sumatoria seria igual a su valor + el valor de esa posicion
             print("LA SUMATORIA ES " + str(sumatoria))
-            if j+1 >= columnas:
+            if j+1 >= columnas:#Verificara si se puede abajo a la derecha.
                 print("No se puede abajo derecha")
             else:  
+                #En caso que si se pueda, lo pintara de azul
                 btnLista[i+1][j+1].config(bg = "#FFFFFF", relief = "solid", fg = "blue") 
                 print("El numero es AD" + str(matriz[i+1][j+1]))
-                sumatoria = sumatoria + matriz[i+1][j+1]
+                sumatoria = sumatoria + matriz[i+1][j+1] #Sumatoria seria igual a su valor + el valor de esa posicion
                 print("LA SUMATORIA ES " + str(sumatoria))
             
-            if j-1 < 0:
+            if j-1 < 0:#Comprobara si se puede abajo izquierda
                 print("No se puede abajo izquierda")
             else: 
+                #En caso que si se pueda, lo pintara de azul
                 btnLista[i+1][j-1].config(bg = "#FFFFFF", relief = "solid", fg = "blue")
                 print("El numero es AI" + str(matriz[i+1][j-1]))
-                sumatoria = sumatoria + matriz[i+1][j-1]
+                sumatoria = sumatoria + matriz[i+1][j-1]#Sumatoria seria igual a su valor + el valor de esa posicion
                 print("LA SUMATORIA ES " + str(sumatoria))
         
-        if i -1 <= 0:
+        if i -1 < 0:#Ahora se comprobara si se puede hacia arriba.
             print("No se puede arriba")
         else:
             print(filas)
@@ -157,6 +169,16 @@ def detenerTiempo():
     resultadoUsuario = entry.get()
     print(resultadoUsuario)
     print(sumatoria)
+    if int(resultadoUsuario) == sumatoria:
+        if tiempo > 25.0:
+            messagebox.showinfo(message="Lo siento, se acabo tu tiempo te has tardado " + str(tiempo) + " segundos.", title="TIEMPO")
+        else:
+            messagebox.showinfo(message="Felicidades, la respuesta es correcta y te has tardado " + str(tiempo) + " segundos.", title="Felicidades!")
+            
+    else:
+        messagebox.showinfo(message="Lo siento, el numero correcto era " + str(sumatoria), title="Incorrecto")
+    
+    generarMatriz()
 
 #Crear un boton que diga, seleccion
 
@@ -174,7 +196,7 @@ print(matriz)
 
 
 btnLista= []
-
+ejemplo = [["x", "x"]]
 def generarMatriz():
     posicionX =.2
     posicionY = .2
@@ -187,27 +209,40 @@ def generarMatriz():
             #label2.place(relx=posicionX, rely=posicionY)
             #label2.config(bg = "#070D0F")
             
-            btnLista[i].append(Button(root, text = matriz[i][j], command=partial(nuevo_click, i,j) ))
-            btnLista[i][j].config(bg = "#FFFFFF", relief = "solid", fg = "white")
-            btnLista[i][j].place(relx = 0.1 *j, rely = 0.1 + 0.1*i, relwidth = 0.1, relheight = 0.1)
+            if [i, j] in anulados:
+                print('Existe en la matriz')
+                
+                btnLista[i].append(Button(root, text = "x", command=partial(nuevo_click, i,j) ))
+                btnLista[i][j].config(bg = "#FFFFFF", relief = "solid", fg = "black")
+                
+                btnLista[i][j].place(relx = 0.1 *j, rely = 0.1 + 0.1*i, relwidth = 0.1, relheight = 0.1)
+                #messagebox.showinfo(message="No puedes seleccionar este numero", title="Incorrecto")
+            else:
+                btnLista[i].append(Button(root, text = matriz[i][j], command=partial(nuevo_click, i,j) ))
+                btnLista[i][j].config(bg = "#FFFFFF", relief = "solid", fg = "white")
+                btnLista[i][j].place(relx = 0.1 *j, rely = 0.1 + 0.1*i, relwidth = 0.1, relheight = 0.1)
             
             posicionX+=0.1
         posicionY+=0.1
         posicionX = .2
 
 generarMatriz()
-    
+
+titulo = ttk.Label(text="Bienvenido a Matriz Aritmetrica", font="Arial")
+titulo.place(x =10, y=30)
+titulo1 = ttk.Label(text="Escriba su resultado")
+titulo1.place(x =320, y=30)
     
 # Crear caja de texto.
 entry = ttk.Entry()
 # Posicionarla en la ventana.
-entry.place(x=50, y=30) 
+entry.place(x=370+70, y=30) 
 
-boton = ttk.Button(text="Creacion", command=generarMatriz)
-boton.place(x=5, y=5)
+#boton = ttk.Button(text="Creacion", command=generarMatriz)
+#boton.place(x=5, y=5)
 
-boton = ttk.Button(text="Detener", command=detenerTiempo)
-boton.place(x=100, y=5)
+boton = ttk.Button(text="Comprobar", command=detenerTiempo)
+boton.place(x=370+70+150, y=30)
 
 
 root.mainloop()

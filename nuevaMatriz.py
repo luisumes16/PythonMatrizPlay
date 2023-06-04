@@ -6,8 +6,8 @@ from tkinter import messagebox
 import time
 
 root = Tk()
-root.title('Matriz aritmetrica')
-root.geometry("1000x700")
+root.title("matriz aritmetrica")
+root.geometry("600x600")
 root.config(bg="#FFFFFF") #background - color de fondo - blanco
 #messagebox.showinfo(message="Mensaje de prueba", title="prueba")
 #Crear una matriz con numeros aleatorios de 3 columas y 3 filas
