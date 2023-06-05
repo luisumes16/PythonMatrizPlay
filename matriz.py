@@ -6,6 +6,52 @@ import random
 from tkinter import messagebox
 import time
 
+
+
+#Inicio de otra ventana de inicio
+
+
+root2 = Tk()
+root2.title('TKINTER GAME REGISTRO')
+root2.geometry("700x500")
+root2.config(bg="#FFFFFF")
+
+#texto en pantalla
+titulo = ttk.Label(root2, text="Bienvenido a Matriz Aritmetrica", font="Arial")
+titulo.place(x =220, y=40)
+
+#texto en pantalla jugador 1
+titulo1 = ttk.Label(root2,text="Jugador 1: ")
+titulo1.place(x=220,y=100)
+titulo2= ttk.Entry(root2, text="Jugador 1: ")
+titulo2.place(x=220,y=120)
+
+
+#texto en pantalla jugador 2
+titulo3 = ttk.Label(root2, text="Jugador 2: ")
+titulo3.place(x=220,y=190)
+inputNombre2 =ttk.Entry(root2, text="Jugador 2: ")
+inputNombre2.place(x=220, y=210)
+
+
+def ingresarcredenciales():
+    global nombre1
+    nombre1 = titulo2.get()
+    nombre1=ttk.Label( text=str(nombre1))
+    nombre1.place(x=330, y=260)
+   
+    global nombre2
+    nombre2 = inputNombre2.get()
+    nombre2=ttk.Label( text=nombre2)
+    nombre2.place(x=330, y=290)
+    
+    
+boton = ttk.Button(text="ingrese: ", command=ingresarcredenciales)
+boton.place(x=150+10+150,y=400)
+ingrese=ttk.Entry()
+    
+    
+
 inicio = 0
 final = 0
 detener = False
@@ -17,11 +63,6 @@ root.title('TKINTER GAME')
 root.geometry("800x700")
 root.config(bg="#FFFFFF")
 
-
-root2 = Tk()
-root2.title('TKINTER GAME')
-root2.geometry("800x700")
-root2.config(bg="#FFFFFF")
 
 filas = 8 #El numero de filas que deseo en la matriz
 columnas = 8 # el numero de columnas que deseo en la matriz
@@ -228,20 +269,20 @@ def generarMatriz():
 
 generarMatriz()
 
-titulo = ttk.Label(text="Bienvenido a Matriz Aritmetrica", font="Arial")
+titulo = ttk.Label(root, text="Bienvenido a Matriz Aritmetrica", font="Arial")
 titulo.place(x =10, y=30)
-titulo1 = ttk.Label(text="Escriba su resultado")
+titulo1 = ttk.Label(root, text="Escriba su resultado")
 titulo1.place(x =320, y=30)
     
 # Crear caja de texto.
-entry = ttk.Entry()
+entry = ttk.Entry(root)
 # Posicionarla en la ventana.
 entry.place(x=370+70, y=30) 
 
 #boton = ttk.Button(text="Creacion", command=generarMatriz)
 #boton.place(x=5, y=5)
 
-boton = ttk.Button(text="Comprobar", command=detenerTiempo)
+boton = ttk.Button(root, text="Comprobar", command=detenerTiempo)
 boton.place(x=370+70+150, y=30)
 
 
