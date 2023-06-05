@@ -1,4 +1,4 @@
-#Esta es una nueva actualizacion
+#esta es una nueva actualizacion
 from tkinter import*
 from tkinter import ttk
 from functools import partial
@@ -6,63 +6,103 @@ import random
 from tkinter import messagebox
 import time
 
+#evaluar turnos
+turno=True
 
 
-#Inicio de otra ventana de inicio
+puntosjugador1 =0
+puntosjugador2=0
+
+nombre1=" "
+nombre2=" "
+
 
 
 root2 = Tk()
-root2.title('TKINTER GAME REGISTRO')
+root2.title('TKINTER game')
 root2.geometry("700x500")
 root2.config(bg="#FFFFFF")
 
+def selection_changed(event):
+    global filas
+    global columnas
+    selection = combo.get()
+    filas = int(selection)
+    columnas = int(selection)
+    messagebox.showinfo(
+        title="Nuevo elemento seleccionado",
+        message=selection
+    )
+    generarMatriz()
+combo = ttk.Combobox(root2)
+combo = ttk.Combobox(
+    state="readonly",
+    values=["3", "4", "5", "6", "7", "8"]
+)
+combo.bind("<<ComboboxSelected>>", selection_changed)
+combo.place(x=50, y=450)
+
+#conteo de puntos jugador 2
+Labelpunteos1=ttk.Label(root2, text= "0")
+Labelpunteos1.place(x=220, y=280)
+
+#mostrar en pantalla siguiente jugador
+labelturn=ttk.Label(root2,text="0")
+labelturn.place(x=220, y=400)
+
+#conteo de puntos jugador 1
+Labelpunteos2=ttk.Label(root2, text= "0")
+Labelpunteos2.place(x=220, y=250)
+
+
 #texto en pantalla
-titulo = ttk.Label(root2, text="Bienvenido a Matriz Aritmetrica", font="Arial")
+titulo = ttk.Label(text="Bienvenido a Matriz Aritmetrica", font="Arial")
 titulo.place(x =220, y=40)
 
 #texto en pantalla jugador 1
-titulo1 = ttk.Label(root2,text="Jugador 1: ")
+titulo1 = ttk.Label(text="Jugador 1: ")
 titulo1.place(x=220,y=100)
 titulo2= ttk.Entry(root2, text="Jugador 1: ")
 titulo2.place(x=220,y=120)
 
 
 #texto en pantalla jugador 2
-titulo3 = ttk.Label(root2, text="Jugador 2: ")
+titulo3 = ttk.Label(text="Jugador 2: ")
 titulo3.place(x=220,y=190)
-inputNombre2 =ttk.Entry(root2, text="Jugador 2: ")
-inputNombre2.place(x=220, y=210)
+titulo4 =ttk.Entry(root2, text="Jugador 2: ")
+titulo4.place(x=220, y=210)
 
 
 def ingresarcredenciales():
     global nombre1
-    nombre1 = titulo2.get()
-    nombre1=ttk.Label( text=str(nombre1))
-    nombre1.place(x=330, y=260)
+    nombre1=titulo2.get()
+    labelnombre1=ttk.Label(text=str(nombre1))
+    labelnombre1.place(x=330, y=250)
+   
    
     global nombre2
-    nombre2 = inputNombre2.get()
-    nombre2=ttk.Label( text=nombre2)
-    nombre2.place(x=330, y=290)
+    nombre2=titulo4.get()
+    labelnombre2=ttk.Label(text=str(nombre2))
+    labelnombre2.place(x=330, y=280)
+   
     
     
 boton = ttk.Button(text="ingrese: ", command=ingresarcredenciales)
 boton.place(x=150+10+150,y=400)
 ingrese=ttk.Entry()
-    
-    
+
+
 
 inicio = 0
 final = 0
 detener = False
 
-#Vaoy a probar algo nuevo
+#Voy a probar algo nuevo
 #Crear una ventana en tkinter
 root = Tk()
 root.title('TKINTER GAME')
-root.geometry("800x700")
+root.geometry("700x500")
 root.config(bg="#FFFFFF")
-
 
 filas = 8 #El numero de filas que deseo en la matriz
 columnas = 8 # el numero de columnas que deseo en la matriz
@@ -178,31 +218,17 @@ def nuevo_click(i, j):
         global inicio
         inicio = time.time()
         print(inicio)
+    
         
-        
-        
-        #respuesta = input('Ingresa la respuesta \n')
-       
-        
-    
-    
-    
-    
-
-
-    
-    
-     
-    
-    #btnLista[i-1][j].config(bg = "#FFFFFF", relief = "solid", fg = "blue")
-    
-    
         
 def detenerTiempo():
     global tiempo
     global inicio
     global final
     global sumatoria
+    global puntosjugador1
+    global puntosjugador2
+    
     final = time.time()
     tiempo = round(final-inicio, 0)
     
@@ -210,16 +236,41 @@ def detenerTiempo():
     resultadoUsuario = entry.get()
     print(resultadoUsuario)
     print(sumatoria)
+    
     if int(resultadoUsuario) == sumatoria:
         if tiempo > 25.0:
             messagebox.showinfo(message="Lo siento, se acabo tu tiempo te has tardado " + str(tiempo) + " segundos.", title="TIEMPO")
         else:
             messagebox.showinfo(message="Felicidades, la respuesta es correcta y te has tardado " + str(tiempo) + " segundos.", title="Felicidades!")
             
+            
+            if turno == True:
+               
+                puntosjugador2 = puntosjugador2 + 3
+                messagebox.showinfo(message= "el jugador " + nombre2 + " lleva " + str (puntosjugador2) + " puntos\n" + "turno de: " + nombre1 )
+                #print("el jugador " + nombre2 + " lleva: " + str (puntosjugador2) + " puntos")
+                Labelpunteos1.config(text= str(puntosjugador2))
+                labelturn.config(text= "turno de " + nombre1)
+                
+            else:
+                puntosjugador1 = puntosjugador1 + 3
+                messagebox.showinfo(message= "el jugador " + nombre1 + " lleva " + str (puntosjugador1) + " puntos\n" + "turno de: " + nombre2)
+                Labelpunteos2.config(text= str(puntosjugador1))
+                labelturn.config(text="turno de " + nombre2)
+                #print("el jugador " + nombre1 + " lleva: " + str (puntosjugador1) + " puntos")
+            
     else:
-        messagebox.showinfo(message="Lo siento, el numero correcto era " + str(sumatoria), title="Incorrecto")
-    
+        #evaluar si turno es igual a true crear un messagebox con el mensaje "le correspendo turno a " + nombre 2
+        if turno == True:
+            messagebox.showinfo(message="Lo siento, la respuesta es incorrecta y te has tardado " + str(tiempo) + " segundos.\n Lleva " + str (puntosjugador2) + "\nLe corresponde turno a: " + str(nombre1), title="TIEMPO")
+             
+        else:
+            messagebox.showinfo(message="Lo siento, la respuesta es incorrecta y te has tardado " + str(tiempo) + " segundos.\n" + "lleva "+ str (puntosjugador1) + "\nLe corresponde turno a: "+ str(nombre2), title="TIEMPO")
+       # messagebox.showinfo(message="Lo siento, el numero correcto era " + str(sumatoria) + "Turno de: " str(), title="Incorrecto ")
+        
+
     generarMatriz()
+   
 
 #Crear un boton que diga, seleccion
 
@@ -239,6 +290,16 @@ print(matriz)
 btnLista= []
 ejemplo = [["x", "x"]]
 def generarMatriz():
+    global turno
+    
+    if turno:
+        print("turno del jugador 1 ")
+        turno=False
+           
+    else:
+        print("turno del jugador 2 ")
+        turno=True
+        
     posicionX =.2
     posicionY = .2
     for i in range(filas):
@@ -267,10 +328,10 @@ def generarMatriz():
         posicionY+=0.1
         posicionX = .2
 
-generarMatriz()
+
 
 titulo = ttk.Label(root, text="Bienvenido a Matriz Aritmetrica", font="Arial")
-titulo.place(x =10, y=30)
+titulo.place(x =10, y=10)
 titulo1 = ttk.Label(root, text="Escriba su resultado")
 titulo1.place(x =320, y=30)
     
